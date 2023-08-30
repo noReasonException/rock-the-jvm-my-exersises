@@ -43,11 +43,27 @@ object StateMonad {
   //Exersise 2
   //Definitions 24:24
 
+  //returns a State data structure that, when run, will not change the state but will issue the value f(a)
+  def inspect[A,B](f:A=>B):State[A,B] = State[A,B].apply(p=>(p,f(p)))
+
+  //returns a State data structure that, when run, returns the value of that state and makes no changes
+  def get[A]:State[A,A]=State[A,A].apply(p=>(p,p))
+
+  //return a State data structure that, when run, returns Unit and Sets the state to that value
+  def set[A](v:A):State[A,Unit] = State[A,Unit].apply(p=>(v,()))
+
+  //returns a State data structure that, when run, will return Unit and sets the state to f(state)
+  def modify[A](f:A=>A):State[A,Unit] = State[A,Unit].apply(p=>(f(p),()))
+
   def main(args: Array[String]): Unit = {
     //oldState()
     //println(newState().run(10).value)
     val currentShoppingCart = ShoppingCart("Bread"::Nil,0.96)
     println(addToCart("Eggs",1.49).run(currentShoppingCart).value)
+
+
+
+
   }
 
 
