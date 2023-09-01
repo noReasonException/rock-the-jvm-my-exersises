@@ -44,16 +44,16 @@ object StateMonad {
   //Definitions 24:24
 
   //returns a State data structure that, when run, will not change the state but will issue the value f(a)
-  def inspect[A,B](f:A=>B):State[A,B] = State[A,B].apply(p=>(p,f(p)))
+  def inspect[A,B](f:A=>B):State[A,B] = State[A,B](p=>(p,f(p)))
 
   //returns a State data structure that, when run, returns the value of that state and makes no changes
-  def get[A]:State[A,A]=State[A,A].apply(p=>(p,p))
+  def get[A]:State[A,A]=State[A,A](p=>(p,p))
 
   //return a State data structure that, when run, returns Unit and Sets the state to that value
-  def set[A](v:A):State[A,Unit] = State[A,Unit].apply(p=>(v,()))
+  def set[A](v:A):State[A,Unit] = State[A,Unit](p=>(v,()))
 
   //returns a State data structure that, when run, will return Unit and sets the state to f(state)
-  def modify[A](f:A=>A):State[A,Unit] = State[A,Unit].apply(p=>(f(p),()))
+  def modify[A](f:A=>A):State[A,Unit] = State[A,Unit](p=>(f(p),()))
 
   def main(args: Array[String]): Unit = {
     //oldState()
